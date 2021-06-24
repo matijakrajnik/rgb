@@ -16,7 +16,7 @@ func TestSignUp(t *testing.T) {
 		Username: "batman",
 		Password: "secret123",
 	})
-	rec := PerformRequest(router, "POST", "/api/signup", body)
+	rec := performRequest(router, "POST", "/api/signup", body)
 	assert.Equal(t, http.StatusOK, rec.Code)
 	assert.Equal(t, "Signed up successfully.", jsonRes(rec.Body)["msg"])
 	assert.NotEmpty(t, jsonRes(rec.Body)["jwt"])
@@ -29,7 +29,7 @@ func TestSignUpEmptyUsername(t *testing.T) {
 		Username: "",
 		Password: "secret123",
 	})
-	rec := PerformRequest(router, "POST", "/api/signup", body)
+	rec := performRequest(router, "POST", "/api/signup", body)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.Equal(t, "Username is required.", jsonFieldError(jsonRes(rec.Body), "Username"))
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])
@@ -42,7 +42,7 @@ func TestSignUpShortUsername(t *testing.T) {
 		Username: "batm",
 		Password: "secret123",
 	})
-	rec := PerformRequest(router, "POST", "/api/signup", body)
+	rec := performRequest(router, "POST", "/api/signup", body)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.Equal(t, "Username must be longer than or equal 5 characters.", jsonFieldError(jsonRes(rec.Body), "Username"))
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])
@@ -55,7 +55,7 @@ func TestSignUpLongUsername(t *testing.T) {
 		Username: strings.Repeat("b", 31),
 		Password: "secret123",
 	})
-	rec := PerformRequest(router, "POST", "/api/signup", body)
+	rec := performRequest(router, "POST", "/api/signup", body)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.Equal(t, "Username cannot be longer than 30 characters.", jsonFieldError(jsonRes(rec.Body), "Username"))
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])
@@ -69,7 +69,7 @@ func TestSignUpExistingUsername(t *testing.T) {
 		Username: user.Username,
 		Password: user.Password,
 	})
-	rec := PerformRequest(router, "POST", "/api/signup", body)
+	rec := performRequest(router, "POST", "/api/signup", body)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.Equal(t, "Username already exists.", jsonRes(rec.Body)["error"])
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])
@@ -82,7 +82,7 @@ func TestSignUpEmptyPassword(t *testing.T) {
 		Username: "batman",
 		Password: "",
 	})
-	rec := PerformRequest(router, "POST", "/api/signup", body)
+	rec := performRequest(router, "POST", "/api/signup", body)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.Equal(t, "Password is required.", jsonFieldError(jsonRes(rec.Body), "Password"))
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])
@@ -95,7 +95,7 @@ func TestSignUpShortPassword(t *testing.T) {
 		Username: "batman",
 		Password: "secret",
 	})
-	rec := PerformRequest(router, "POST", "/api/signup", body)
+	rec := performRequest(router, "POST", "/api/signup", body)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.Equal(t, "Password must be longer than or equal 7 characters.", jsonFieldError(jsonRes(rec.Body), "Password"))
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])
@@ -108,7 +108,7 @@ func TestSignUpLongPassword(t *testing.T) {
 		Username: "batman",
 		Password: strings.Repeat("s", 33),
 	})
-	rec := PerformRequest(router, "POST", "/api/signup", body)
+	rec := performRequest(router, "POST", "/api/signup", body)
 	assert.Equal(t, http.StatusBadRequest, rec.Code)
 	assert.Equal(t, "Password cannot be longer than 32 characters.", jsonFieldError(jsonRes(rec.Body), "Password"))
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])
@@ -122,7 +122,7 @@ func TestSignIn(t *testing.T) {
 		Username: user.Username,
 		Password: user.Password,
 	})
-	rec := PerformRequest(router, "POST", "/api/signin", body)
+	rec := performRequest(router, "POST", "/api/signin", body)
 	assert.Equal(t, http.StatusOK, rec.Code)
 	assert.Equal(t, "Signed in successfully.", jsonRes(rec.Body)["msg"])
 	assert.NotEmpty(t, jsonRes(rec.Body)["jwt"])
@@ -136,7 +136,7 @@ func TestSignInInvalidUsername(t *testing.T) {
 		Username: "invalid",
 		Password: user.Password,
 	})
-	rec := PerformRequest(router, "POST", "/api/signin", body)
+	rec := performRequest(router, "POST", "/api/signin", body)
 	assert.Equal(t, http.StatusUnauthorized, rec.Code)
 	assert.Equal(t, "Sign in failed.", jsonRes(rec.Body)["error"])
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])
@@ -150,7 +150,7 @@ func TestSignInInvalidPassword(t *testing.T) {
 		Username: user.Username,
 		Password: "invalid",
 	})
-	rec := PerformRequest(router, "POST", "/api/signin", body)
+	rec := performRequest(router, "POST", "/api/signin", body)
 	assert.Equal(t, http.StatusUnauthorized, rec.Code)
 	assert.Equal(t, "Sign in failed.", jsonRes(rec.Body)["error"])
 	assert.Empty(t, jsonRes(rec.Body)["jwt"])

@@ -143,7 +143,7 @@ func NewRequest(router *gin.Engine, method, path, body string) *http.Request {
 	return req
 }
 
-func PerformRequest(router *gin.Engine, method, path, body string) *httptest.ResponseRecorder {
+func performRequest(router *gin.Engine, method, path, body string) *httptest.ResponseRecorder {
 	req := NewRequest(router, method, path, body)
 	rec := httptest.NewRecorder()
 	router.ServeHTTP(rec, req)

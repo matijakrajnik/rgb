@@ -38,7 +38,7 @@ func TestCreatePostUnathorized(t *testing.T) {
 		Content: "Joker is planning big hit tonight.",
 	}
 	body := postJSON(post)
-	rec := PerformRequest(router, "POST", "/api/posts", body)
+	rec := performRequest(router, "POST", "/api/posts", body)
 	assert.Equal(t, http.StatusUnauthorized, rec.Code)
 	assert.Equal(t, "Authorization header missing.", jsonRes(rec.Body)["error"])
 }
@@ -154,7 +154,7 @@ func TestIndexPostsUnathorized(t *testing.T) {
 	user := addTestUser()
 	_ = addTestPost(user)
 
-	rec := PerformRequest(router, "GET", "/api/posts", "")
+	rec := performRequest(router, "GET", "/api/posts", "")
 	assert.Equal(t, http.StatusUnauthorized, rec.Code)
 	assert.Equal(t, "Authorization header missing.", jsonRes(rec.Body)["error"])
 }
@@ -227,7 +227,7 @@ func TestUpdatePostUnauthorized(t *testing.T) {
 		Title:   "Gotham at night",
 		Content: "Gotham never sleeps.",
 	}
-	rec := PerformRequest(router, "PUT", "/api/posts", postJSON(updated))
+	rec := performRequest(router, "PUT", "/api/posts", postJSON(updated))
 	assert.Equal(t, http.StatusUnauthorized, rec.Code)
 	assert.Equal(t, "Authorization header missing.", jsonRes(rec.Body)["error"])
 }
@@ -388,7 +388,7 @@ func TestDeletePostUnauthorized(t *testing.T) {
 	user := addTestUser()
 	post := addTestPost(user)
 
-	rec := PerformRequest(router, "DELETE", fmt.Sprintf("/api/posts/%d", post.ID), "")
+	rec := performRequest(router, "DELETE", fmt.Sprintf("/api/posts/%d", post.ID), "")
 	assert.Equal(t, http.StatusUnauthorized, rec.Code)
 	assert.Equal(t, "Authorization header missing.", jsonRes(rec.Body)["error"])
 }
