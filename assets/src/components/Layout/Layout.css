@@ -1,0 +1,30 @@
+/* Show it is fixed to the top */
+body {
+  min-height: 100%;
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+
+html {
+  height: 100%;
+}
+
+/* .bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+} */
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.navbar-nav {
+  /* flex: 1; */
+  text-transform: uppercase;
+}

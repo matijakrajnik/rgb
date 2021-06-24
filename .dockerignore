@@ -1,0 +1,28 @@
+# This file
+.dockerignore
+
+# Git files
+.git/
+.gitignore
+
+# VS Code config dir
+.vscode/
+
+# Docker configuration files
+docker/
+
+# Assets dependencies and built files
+assets/build/
+assets/node_modules/
+
+# Log files
+logs/
+
+# Built binary
+cmd/rgb/rgb
+
+# ENV file
+.env
+
+# Readme file
+README.md

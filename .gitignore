@@ -1,0 +1,27 @@
+# VS code config files
+/.vscode
+
+# assets dependencies
+/assets/node_modules/
+/assets/.pnp
+/assets/.pnp.js
+
+# assets testing
+/assets/coverage
+
+# assets production
+/assets/build/
+
+# assets misc
+/assets/.DS_Store
+/assets/.env.local
+/assets/.env.development.local
+/assets/.env.test.local
+/assets/.env.production.local
+
+/assets/npm-debug.log*
+/assets/yarn-debug.log*
+/assets/yarn-error.log*
+
+# log files
+/logs/

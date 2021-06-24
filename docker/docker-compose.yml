@@ -1,0 +1,26 @@
+version: "3"
+services:
+  rgb:
+    image: kramat/rgb
+    env_file:
+      - ../.env
+    environment:
+      RGB_DB_HOST: db
+    depends_on:
+      - db
+    ports:
+      - ${RGB_PORT}:${RGB_PORT}
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${RGB_DB_USER}
+      POSTGRES_PASSWORD: ${RGB_DB_PASSWORD}
+      POSTGRES_DB: ${RGB_DB_NAME}
+    ports:
+      - ${RGB_DB_PORT}:${RGB_DB_PORT}
+    volumes:
+      - postgresql:/var/lib/postgresql/rgb
+      - postgresql_data:/var/lib/postgresql/rgb/data
+volumes:
+  postgresql: {}
+  postgresql_data: {}
